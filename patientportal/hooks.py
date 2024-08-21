@@ -227,3 +227,5 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+
+website_route_rules = [{'from_route': '/patient-portal/<path:app_path>', 'to_route': 'patient-portal'}, {'from_route': '/patientportal/<path:app_path>', 'to_route': 'patientportal'},]
