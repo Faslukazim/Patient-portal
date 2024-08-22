@@ -1,7 +1,7 @@
 <template>
   <div class="w-fit h-fit p-2 border border-gray-50 rounded-md shadow-sm bg-white">
     <h3 class="text-md font-medium mb-3 whitespace-nowrap">Available Slots</h3>
-    <div class="flex md:flex-col  gap-4">
+    <div class="flex flex-col gap-4 overflow-auto h-64 custom-scrollbar">
       <div v-for="slot in timeSlots" :key="slot" :class="[
         'p-0.5 items-center flex justify-center font-medium text-md cursor-pointer shadow-sm rounded-md',
         slot === selectedTimeSlot ? 'bg-black text-white' : 'bg-gray-100 hover:bg-gray-200'
@@ -16,6 +16,7 @@
   </div>
 </template>
 
+
 <script setup>
 import { ref } from 'vue'
 
@@ -26,6 +27,15 @@ const timeSlots = ref([
   '1:00 PM',
   '2:00 PM',
   '3:00 PM',
+  '5:00 PM',
+  '6:00 PM',
+  '7:00 PM',
+  '8:00 PM',
+  '9:00 PM',
+
+
+
+
 ])
 const selectedTimeSlot = ref('')
 
@@ -41,5 +51,20 @@ function goToNextStep() {
 </script>
 
 <style scoped>
-/* Add any additional styles here if needed */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #e5e5e5;
+  /* Color of the scrollbar thumb */
+  border-radius: 4px;
+  /* Roundness of the scrollbar thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #f7fafc;
+  /* Color of the scrollbar track */
+}
 </style>

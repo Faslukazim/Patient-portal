@@ -9,9 +9,10 @@
                 <div class="mt-5 flex gap-3 overflow-x-auto scrollbar-hide flex-wrap sm:flex-nowrap">
                     <!-- Loop for displaying specializations -->
                     <div v-for="Department in specializationList" :key="Department.department" :class="[
-                        'cursor-pointer p-2 flex-shrink-0 items-center flex justify-center w-full sm:w-fit text-gray-800 font-medium text-base shadow-sm hover:bg-gray-200 bg-gray-100 rounded-md transition-transform hover:scale-95',
+                        'cursor-pointer p-2 flex-shrink-0 items-center flex justify-center w-full sm:w-fit text-base font-medium shadow-sm rounded-md transition-transform hover:scale-95',
                         {
-                            'bg-gray-100': selectedDepartment === Department.department,
+                            'bg-black text-white': selectedDepartment === Department.department,
+                            'bg-gray-100 text-gray-800': selectedDepartment !== Department.department,
                         },
                     ]" @click="selectDepartment(Department.department)">
                         {{ Department.department }}
