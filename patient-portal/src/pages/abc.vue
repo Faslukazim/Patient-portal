@@ -1,6 +1,6 @@
 <template>
     <div class="w-screen font-sans flex justify-center">
-        <!-- <MHeader /> -->
+        <MHeader />
         <div class="flex max-w-6xl h-full mt-28 shadow-sm border border-gray-50 rounded-md">
             <div class="flex-1 overflow-auto p-5">
                 <h1 class="text-gray-900 text-2xl font-medium">Book an appointment</h1>
@@ -58,13 +58,13 @@ const booking = ref(false)
 const specializationResource = createListResource({
     doctype: 'Healthcare Practitioner',
     fields: ['department'],
-    auto: false, // Changed to false to prevent automatic updates
+    auto: false,
 })
 
 const PractResource = createListResource({
     doctype: 'Healthcare Practitioner',
     fields: ['name', 'practitioner_name', 'image'],
-    auto: false, // Changed to false to prevent automatic updates
+    auto: false,
     filters: {
         department: selectedDepartment.value,
     },
@@ -86,7 +86,6 @@ watch(selectedDepartment, (newVal, oldVal) => {
 })
 
 
-// Manual data fetch
 specializationResource.list.fetch()
 
 function selectDepartment(department) {

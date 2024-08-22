@@ -25,21 +25,21 @@ let router = createRouter({
   routes,
 })
 
-router.beforeEach(async (to, from, next) => {
-  let isLoggedIn = session.isLoggedIn
-  try {
-    await userResource.promise
-  } catch (error) {
-    isLoggedIn = false
-  }
+// router.beforeEach(async (to, from, next) => {
+//   let isLoggedIn = session.isLoggedIn
+//   try {
+//     await userResource.promise
+//   } catch (error) {
+//     isLoggedIn = false
+//   }
 
-  if (to.name === 'Login' && isLoggedIn) {
-    next({ name: 'Departments' })
-  } else if (to.name !== 'Login' && !isLoggedIn) {
-    next({ name: 'Login' })
-  } else {
-    next()
-  }
-})
+//   if (to.name === 'Login' && isLoggedIn) {
+//     next({ name: 'Departments' })
+//   } else if (to.name !== 'Login' && !isLoggedIn) {
+//     next({ name: 'Login' })
+//   } else {
+//     next()
+//   }
+// })
 
 export default router

@@ -1,6 +1,7 @@
 <template>
   <div class="w-screen font-sans flex justify-center">
-    <MHeader />
+    fdsfsd
+    <!-- <MHeader />
     <div class="flex max-w-6xl h-full mt-28 shadow-sm border border-gray-50 rounded-md">
       <div class="flex-1 overflow-auto p-5">
         <h1 class="text-gray-900 text-2xl font-medium">Book an appointment</h1>
@@ -24,7 +25,6 @@
               'bg-gray-100': selectedDoctor === Doctor.practitioner_name,
             },
           ]">
-            <!-- <div class="flex flex-col gap-3" @click="selectedDoctor = Doctor.practitioner_name"></div> -->
 
             <img class="h-20 w-16 bg-gray-50 rounded-md" :src="Doctor.image" alt="" />
             <span class="text-xl font-medium tracking-wider">{{
@@ -51,77 +51,74 @@
       <template #body-title>
         <h3 class="font-medium">Book Appointment</h3>
       </template>
-      <template #body-content>
+<template #body-content>
         <div class="p-2">
           <FormControl type="date" size="sm" variant="subtle" placeholder="Select date" v-model="appointmentDate"
             label="Appointment Date" />
         </div>
       </template>
-      <template #actions>
+<template #actions>
         <Button variant="solid" @click="confiRm">Confirm</Button>
         <Button class="ml-2" @click="openModal = false">Close</Button>
       </template>
-    </Dialog>
+</Dialog> -->
   </div>
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
-import Calendar from '../components/Calendar.vue'
-import MHeader from '../components/Header.vue'
-import TimeSlots from '../components/TimeSlots.vue'
-import { createListResource, Button, Dialog, FormControl } from 'frappe-ui'
-import { useRoute } from 'vue-router'
+// import { computed, ref, watch } from 'vue'
+// import Calendar from '../components/Calendar.vue'
+// import MHeader from '../components/Header.vue'
+// import TimeSlots from '../components/TimeSlots.vue'
+// import { createListResource, Button, Dialog, FormControl } from 'frappe-ui'
+// import { useRoute } from 'vue-router'
 
-const openModal = ref(false)
-const appointmentDate = ref('')
-const booking = ref(false)
+// const openModal = ref(false)
+// const appointmentDate = ref('')
+// const booking = ref(false)
 
-// Get query parameters from the route
-const route = useRoute()
-const selectedDoctor = computed(() => route.query.doctor || '')
-const selectedDepartment = computed(() => route.query.department || '')
+// const route = useRoute()
+// const selectedDoctor = computed(() => route.query.doctor || '')
+// const selectedDepartment = computed(() => route.query.department || '')
 
-// Create a list resource for specializations
-const specializationResource = createListResource({
-  doctype: 'Healthcare Practitioner',
-  fields: ['department'],
-  auto: true,
-})
+// const specializationResource = createListResource({
+//   doctype: 'Healthcare Practitioner',
+//   fields: ['department'],
+//   auto: true,
+// })
 
-// Filter the list to only unique departments
-const specializationList = computed(() => {
-  const allDepartments = specializationResource.list.data || []
-  const uniqueDepartments = Array.from(
-    new Set(allDepartments.map((dept) => dept.department))
-  )
-  return uniqueDepartments.map((dept) => ({ department: dept }))
-})
+// const specializationList = computed(() => {
+//   const allDepartments = specializationResource.list.data || []
+//   const uniqueDepartments = Array.from(
+//     new Set(allDepartments.map((dept) => dept.department))
+//   )
+//   return uniqueDepartments.map((dept) => ({ department: dept }))
+// })
 
-const PractResource = createListResource({
-  doctype: 'Healthcare Practitioner',
-  fields: ['name', 'practitioner_name', 'image'],
-  auto: true,
-  filters: {
-    department: selectedDepartment.value,
-  },
-})
+// const PractResource = createListResource({
+//   doctype: 'Healthcare Practitioner',
+//   fields: ['name', 'practitioner_name', 'image'],
+//   auto: true,
+//   filters: {
+//     department: selectedDepartment.value,
+//   },
+// })
 
-const PractList = computed(() => {
-  return PractResource.list.data || []
-})
+// const PractList = computed(() => {
+//   return PractResource.list.data || []
+// })
 
-watch(selectedDepartment, (newVal) => {
-  if (PractResource.list && PractResource.list.params) {
-    PractResource.list.params.filters.department = newVal
-    PractResource.list.fetch()
-  }
-})
+// watch(selectedDepartment, (newVal) => {
+//   if (PractResource.list && PractResource.list.params) {
+//     PractResource.list.params.filters.department = newVal
+//     PractResource.list.fetch()
+//   }
+// })
 
-function confiRm() {
-  console.log('Selected Doctor:', selectedDoctor.value)
-  console.log('Selected Department:', selectedDepartment.value)
-  console.log('Appointment Date:', appointmentDate.value)
-  openModal.value = false
-}
+// function confiRm() {
+//   console.log('Selected Doctor:', selectedDoctor.value)
+//   console.log('Selected Department:', selectedDepartment.value)
+//   console.log('Appointment Date:', appointmentDate.value)
+//   openModal.value = false
+// }
 </script>
