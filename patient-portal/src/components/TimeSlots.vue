@@ -1,7 +1,7 @@
 <template>
   <div class="w-fit h-fit p-2 border border-gray-50 rounded-md shadow-sm bg-white">
     <h3 class="text-md font-medium mb-3 whitespace-nowrap">Available Slots</h3>
-    <div class="flex flex-col gap-4">
+    <div class="flex md:flex-col  gap-4">
       <div v-for="slot in timeSlots" :key="slot" :class="[
         'p-0.5 items-center flex justify-center font-medium text-md cursor-pointer shadow-sm rounded-md',
         slot === selectedTimeSlot ? 'bg-black text-white' : 'bg-gray-100 hover:bg-gray-200'

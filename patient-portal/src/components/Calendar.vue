@@ -30,7 +30,7 @@
         {
           'cursor-pointer hover:bg-gray-300': !isPast(day) && !isToday(day) && activeDay !== day,
           'bg-black text-white cursor-default font-medium': activeDay === day,
-          'bg-gray-300 text-white cursor-default': isToday(day) && activeDay !== day, // Highlight today's date
+          'bg-gray-300 text-gray-700 cursor-default': isToday(day) && activeDay !== day, // Highlight today's date
           'text-gray-700': !isPast(day) && !isToday(day) && activeDay !== day,
           'text-gray-400 cursor-default': isPast(day), // Cursor default for past days
         },

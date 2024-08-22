@@ -1,15 +1,15 @@
 <template>
     <mHeader />
     <div class="w-screen font-sans flex justify-center">
-        <div class="flex max-w-6xl h-full mt-28 shadow-sm border border-gray-50 rounded-md">
+        <div class="flex flex-col max-w-6xl h-full mt-28 shadow-sm border border-gray-50 rounded-md">
             <div class="flex-1 overflow-auto p-5">
                 <h1 class="text-gray-900 text-2xl font-medium">Book an appointment</h1>
                 <h2 class="text-gray-800 mt-10 font-medium text-xl">Specialization:</h2>
 
-                <div class="mt-5 flex gap-3 overflow-x-auto scrollbar-hide">
+                <div class="mt-5 flex gap-3 overflow-x-auto scrollbar-hide flex-wrap sm:flex-nowrap">
                     <!-- Loop for displaying specializations -->
                     <div v-for="Department in specializationList" :key="Department.department" :class="[
-                        'cursor-pointer p-2 flex-shrink-0 items-center flex justify-center w-fit text-gray-800 font-medium text-base shadow-sm hover:bg-gray-200 bg-gray-100 rounded-md transition-transform hover:scale-95',
+                        'cursor-pointer p-2 flex-shrink-0 items-center flex justify-center w-full sm:w-fit text-gray-800 font-medium text-base shadow-sm hover:bg-gray-200 bg-gray-100 rounded-md transition-transform hover:scale-95',
                         {
                             'bg-gray-100': selectedDepartment === Department.department,
                         },
@@ -18,10 +18,10 @@
                     </div>
                 </div>
 
-                <div class="mt-5 flex gap-3 overflow-x-auto scrollbar-hide">
+                <div class="mt-5 flex gap-3 overflow-x-auto scrollbar-hide flex-wrap sm:flex-nowrap">
                     <!-- Loop for displaying doctors -->
                     <div v-for="Doctor in PractList" :key="Doctor.practitioner_name" :class="[
-                        'cursor-pointer w-52 h-52 p-1 flex-col flex-shrink-0 items-center flex justify-center text-gray-800 shadow-sm hover:bg-gray-50 border transition-transform hover:scale-105 rounded-md gap-2',
+                        'cursor-pointer w-full sm:w-52 h-auto p-2 flex-col flex-shrink-0 items-center flex justify-center text-gray-800 shadow-sm hover:bg-gray-50 border transition-transform hover:scale-105 rounded-md gap-2',
                         {
                             'bg-gray-100': selectedDoctor === Doctor.practitioner_name,
                         },
