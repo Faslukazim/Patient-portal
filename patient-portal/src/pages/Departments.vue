@@ -1,6 +1,6 @@
 <template>
+    <mHeader />
     <div class="w-screen font-sans flex justify-center">
-        <!-- <MHeader /> -->
         <div class="flex max-w-6xl h-full mt-28 shadow-sm border border-gray-50 rounded-md">
             <div class="flex-1 overflow-auto p-5">
                 <h1 class="text-gray-900 text-2xl font-medium">Book an appointment</h1>
@@ -8,7 +8,6 @@
 
                 <div class="mt-5 flex gap-3 overflow-x-auto scrollbar-hide">
                     <!-- Loop for displaying specializations -->
-
                     <div v-for="Department in specializationList" :key="Department.department" :class="[
                         'cursor-pointer p-2 flex-shrink-0 items-center flex justify-center w-fit text-gray-800 font-medium text-base shadow-sm hover:bg-gray-200 bg-gray-100 rounded-md transition-transform hover:scale-95',
                         {
@@ -17,12 +16,10 @@
                     ]" @click="selectDepartment(Department.department)">
                         {{ Department.department }}
                     </div>
-
                 </div>
 
                 <div class="mt-5 flex gap-3 overflow-x-auto scrollbar-hide">
                     <!-- Loop for displaying doctors -->
-
                     <div v-for="Doctor in PractList" :key="Doctor.practitioner_name" :class="[
                         'cursor-pointer w-52 h-52 p-1 flex-col flex-shrink-0 items-center flex justify-center text-gray-800 shadow-sm hover:bg-gray-50 border transition-transform hover:scale-105 rounded-md gap-2',
                         {
@@ -32,7 +29,6 @@
                         <img class="h-20 w-16 bg-gray-50 rounded-md" :src="Doctor.image" alt="" />
                         <span class="text-xl font-medium tracking-wider">{{ Doctor.practitioner_name }}</span>
                     </div>
-
                 </div>
 
                 <div v-if="selectedDoctor" class="mt-2 flex justify-end">
@@ -41,56 +37,68 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { createListResource, Button } from 'frappe-ui'
-import MHeader from '../components/Header.vue'
+import mHeader from '../components/Header.vue'
 
+// Setup the router
 const router = useRouter()
 const selectedDoctor = ref('')
 const selectedDepartment = ref('')
 const booking = ref(false)
 
+// Resource to fetch specializations
 const specializationResource = createListResource({
     doctype: 'Healthcare Practitioner',
     fields: ['department'],
-    auto: false, // Changed to false to prevent automatic updates
+    auto: false, // Prevent automatic updates
 })
 
+// Resource to fetch practitioners
 const PractResource = createListResource({
     doctype: 'Healthcare Practitioner',
-    fields: ['name', 'practitioner_name', 'image'],
-    auto: false, // Changed to false to prevent automatic updates
-    filters: {
-        department: selectedDepartment.value,
-    },
+    fields: ['name', 'practitioner_name', 'image', 'department'],
+    auto: false, // Prevent automatic updates
 })
 
+// Computed property for specializations
 const specializationList = computed(() => {
     const allDepartments = specializationResource.list.data || []
     const uniqueDepartments = Array.from(new Set(allDepartments.map(dept => dept.department)))
     return uniqueDepartments.map(department => ({ department }))
 })
 
-const PractList = computed(() => PractResource.list.data || [])
+// Computed property for practitioners
+const PractList = computed(() => {
+    // Only show practitioners for the selected department
+    return PractResource.list.data?.filter(pract => pract.department === selectedDepartment.value) || []
+})
 
-watch(selectedDepartment, (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-        PractResource.list.params.filters.department = newVal
-        PractResource.list.fetch()
+// Fetch specializations on component mount
+onMounted(async () => {
+    await specializationResource.list.fetch()
+    // Optionally fetch practitioners initially if needed
+    await PractResource.list.fetch()
+})
+
+// Watch for department changes and fetch practitioners accordingly
+watch(selectedDepartment, async (newVal) => {
+    if (newVal) {
+        // Fetch practitioners with the updated department filter
+        await PractResource.list.fetch({
+            filters: { department: newVal }
+        })
     }
 })
 
-
-// Manual data fetch
-specializationResource.list.fetch()
-
 function selectDepartment(department) {
     selectedDepartment.value = department
+    // Fetch practitioners when a department is selected
+    PractResource.list.fetch({ filters: { department } })
 }
 
 function selectDoctor(doctorName) {
@@ -107,4 +115,5 @@ function bookAppointment() {
         },
     })
 }
+
 </script>
