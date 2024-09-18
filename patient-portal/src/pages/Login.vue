@@ -1,8 +1,19 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center p-4">
-    <Card title="Signup for your FrappeUI App!" class="w-full max-w-md">
+    <Card title="Register for your Appointment!" class="w-full max-w-md">
       <form class="flex flex-col space-y-2 w-full" @submit.prevent="submit">
-        <Input required name="fullName" type="text" placeholder="John Doe" label="Full Name" v-model="full_name" />
+        <Input required name="firstName" type="text" placeholder="John" label="First Name" v-model="first_name" />
+        <div class="flex items-center space-x-4 ml-3">
+          <label>
+            <input type="radio" name="gender" value="male" v-model="gender" required />
+            Male
+          </label>
+          <label>
+            <input type="radio" name="gender" value="female" v-model="gender" required />
+            Female
+          </label>
+        </div>
+        <Input required name="lastName" type="text" placeholder="Doe" label="Last Name" v-model="last_name" />
         <Input required name="email" type="email" placeholder="johndoe@email.com" label="Email" v-model="user_email" />
         <Input required name="mobile" type="number" placeholder="••••••" label="Mobile No" v-model="user_mobile" />
         <Button type="submit" variant="solid">Signup</Button>
@@ -12,41 +23,30 @@
 </template>
 
 <script lang="ts" setup>
-import { createListResource } from 'frappe-ui'
+import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
-const full_name = ref('')
+const first_name = ref('')
+const last_name = ref('')
+const gender = ref('') // Add gender state
 const user_email = ref('')
 const user_mobile = ref('')
 
+const router = useRouter()
+
 function submit() {
-  const userList = createListResource({
-    doctype: 'Patient',
-    fields: ['first_name', 'email', 'mobile', 'invite_user'],
-    auto: true,
-    transform(d) {
-      console.log(d)
-    },
-  })
+  // Create user (dummy functionality for now)
+  console.log('Submitting user:', { first_name: first_name.value, last_name: last_name.value, gender: gender.value, user_email: user_email.value, user_mobile: user_mobile.value })
 
-  createUser()
+  // Show toast on success
+  toast("Registration Successful!", { type: "success", theme: "light" })
 
-  function createUser() {
-    userList.insert
-      .submit({
-        first_name: full_name.value,
-        email: user_email.value,
-        mobile: user_mobile.value,
-        invite_user: 1,
-        sex: 'male',
-      })
-      .then((response) => {
-        console.log('User created successfully', response)
-      })
-      .catch((error) => {
-        console.error('Error creating user', error)
-      })
-  }
+  // Redirect to patient portal after 2 seconds
+  setTimeout(() => {
+    router.push('/')
+  }, 2000)
 }
 </script>
 
