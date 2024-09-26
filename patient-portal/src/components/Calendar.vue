@@ -91,7 +91,7 @@ const post = createResource({
   url: 'https://demo-earthians.frappe.cloud/api/method/healthcare.healthcare.doctype.patient_appointment.patient_appointment.get_availability_data',
   method: 'GET',
   params: {
-    date: '2024-8-26',
+    date: '26-7-2024',
     practitioner: 'HLC-PRAC-2024-00001',
     appointment: JSON.stringify({
       doctype: "Patient Appointment",
